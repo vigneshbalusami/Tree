@@ -1,0 +1,29 @@
+
+#include<stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <string.h>
+#include <malloc.h>
+
+
+int main()
+{
+	DIR* dir;
+ 	char *folderr=(char *)malloc(sizeof(char)*50);
+    folderr = "/home/students/Desktop/Gmail";
+    struct stat sb;
+
+    if (stat(folderr, &sb) == 0 && S_ISDIR(sb.st_mode))
+    {
+        dir = opendir("/home/students/Desktop/Gmail");
+    }
+    else
+    {
+	char *buffer = (char *)malloc(sizeof(char)*50);
+       sprintf(buffer,"mkdir /home/students/Desktop/Gmail");
+	system(buffer); 
+    }
+return 0;
+}
+
