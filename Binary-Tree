@@ -64,13 +64,30 @@ if(temp!=NULL)
 	display(temp->right);
 }
 }
+void mirror(struct node *temp1,struct node *temp2){
+    if(temp1!=NULL&&temp2!=NULL){
+        if(temp1->data!=temp2->data)
+            f=1;
+        mirror(temp1->left,temp2->right);
+        mirror(temp1->right,temp2->left);
+    }
+}
 int main()
 {
 int i=0;
-for(i=0;i<20;i++)
-newnode(i,root);
+//for(i=0;i<20;i++)
+newnode(0,root);
+newnode(1 ,root);
+newnode(1 ,root);
+newnode(2 ,root);
+newnode(3 ,root);
+newnode(3 ,root);
+newnode(2 ,root);
 
 printf("\n");
 display(root);
+    f=0;
+    mirror(root->left,root->right);
+    printf("\n%d",f);
 return 0;
 }
