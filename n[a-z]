@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+int stack1[10000]={0},top=-1,start=0;
+string sub(string str,string st2,int first){
+    string s1="";
+    int i,v=0,j=0;
+    for(i=stack1[top]-1,j=0;str[i]>='0'&&str[i]<='9';i--,j++)
+        v=v+(str[i]-'0')*(pow(10,j));
+    for(j=0;j<v;j++)
+        s1+=st2;
+    top--;
+    return s1;
+}
+string fun(string str){
+   
+    string s2="";
+    for(;start<str.length();start++){
+    if(str[start]=='['){
+        stack1[++top]=start;
+        start++;
+        s2=s2+fun(str);
+    }
+    else if(str[start]==']')
+        return sub(str,s2,start);
+    else if(str[start]>='a'&&str[start]<='z')
+        s2+=str[start];
+    }
+        return s2;
+}
+int main()
+{
+    
+string str;
+getline(cin,str);
+    cout<<str<<endl;
+    cout<<fun(str);
+    return 0;
+}
+
+//input: 3[a2[ab2[bc]3[a]b2[c]]z]
+//output: aabbcbcaaabccabbcbcaaabcczaabbcbcaaabccabbcbcaaabcczaabbcbcaaabccabbcbcaaabccz
