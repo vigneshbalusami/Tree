@@ -1,4 +1,5 @@
 
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
@@ -8,16 +9,15 @@ ll visit[1000000],max1;
 ll a[1000][1000],path[1000][1000];
 void fun(ll flag,ll n,ll des,ll start,ll first,ll visit1[]){
     if(first==des){
-        cout<<"*"<<flag<<" "<<max1<<endl;
         if(max1>flag)max1=flag;
     }
   else  if(visit1[first]==0){
     for(ll i=start;i<=a[first][0];i++){
-        visit1[first]=1;
-        cout<<"+"<<i<<" "<<first<<" "<<path[first][a[first][i]]<<endl;
-        cout<<i<<"# "<<first<<" "<<a[first][i]<<" "<<visit1[a[first][i]]<<endl;
-        fun(flag+path[first][a[first][i]],n,des,1,a[first][i],visit1);
-        cout<<i<<"& "<<first<<" "<<a[first][i]<<" "<<visit1[a[first][i]]<<endl;
+        ll visit2[1000000];
+         for(ll j=1;j<=n;j++)visit2[j]=visit1[j];
+        visit2[first]=1;
+        fun(flag+path[first][a[first][i]],n,des,1,a[first][i],visit2);
+       
     }
     }
 }
@@ -49,17 +49,7 @@ int main() {
             a[second][0]=++j;
             a[second][j]=first;
         }
-         for( i=0;i<=n;i++){
-            for(j=0;j<=m;j++){
-               cout<<a[i][j]<<" ";
-            }cout<<endl;
-        }
-        cout<<endl;
-         for( i=0;i<=n;i++){
-            for(j=0;j<=m;j++){
-               cout<<path[i][j]<<" ";
-            }cout<<endl;
-        }
+        
         cin>>q;
         
         for( i=1;i<=q;i++){
@@ -67,7 +57,11 @@ int main() {
             ll des,max2;
             cin>>des>>max2;max1=999999;
             fun(0,n,des,1,1,visit);
-            cout<<"()"<<max1<<endl;
+           if(max2>(2*max1))
+            cout<<max2-(2*max1)<<endl;
+            else
+            cout<<max2-(max1)<<endl;
+          
             
         }
     }
