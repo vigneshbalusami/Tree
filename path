@@ -1,0 +1,75 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define MI INT_MAX
+#define MA INT_MIN
+ll visit[1000000],max1;
+ll a[1000][1000],path[1000][1000];
+void fun(ll flag,ll n,ll des,ll start,ll first,ll visit1[]){
+    if(first==des){
+        cout<<"*"<<flag<<" "<<max1<<endl;
+        if(max1>flag)max1=flag;
+    }
+  else  if(visit1[first]==0){
+    for(ll i=start;i<=a[first][0];i++){
+        visit1[first]=1;
+        cout<<"+"<<i<<" "<<first<<" "<<path[first][a[first][i]]<<endl;
+        cout<<i<<"# "<<first<<" "<<a[first][i]<<" "<<visit1[a[first][i]]<<endl;
+        fun(flag+path[first][a[first][i]],n,des,1,a[first][i],visit1);
+        cout<<i<<"& "<<first<<" "<<a[first][i]<<" "<<visit1[a[first][i]]<<endl;
+    }
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    short t;
+    cin>>t;
+    while(t--) {
+        ll m, n,first,second,value;
+        cin>>n>>m;
+        ll q,i,j;
+        
+        for( i=0;i<=n;i++){
+            for(j=0;j<=m;j++){
+                path[i][j]=0;
+                a[i][j]=0;
+            }
+        }
+        for( i = 0; i < n;i++)
+        {
+            cin>>first>>second>>value;
+            path[first][second]=value;
+            path[second][first]=value;
+            j=a[first][0];
+            a[first][0]=++j;
+            a[first][j]=second;
+            j=a[second][0];
+            a[second][0]=++j;
+            a[second][j]=first;
+        }
+         for( i=0;i<=n;i++){
+            for(j=0;j<=m;j++){
+               cout<<a[i][j]<<" ";
+            }cout<<endl;
+        }
+        cout<<endl;
+         for( i=0;i<=n;i++){
+            for(j=0;j<=m;j++){
+               cout<<path[i][j]<<" ";
+            }cout<<endl;
+        }
+        cin>>q;
+        
+        for( i=1;i<=q;i++){
+            for(j=0;j<=n;j++)visit[j]=0;
+            ll des,max2;
+            cin>>des>>max2;max1=999999;
+            fun(0,n,des,1,1,visit);
+            cout<<"()"<<max1<<endl;
+            
+        }
+    }
+    return 0;
+}
